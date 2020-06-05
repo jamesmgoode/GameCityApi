@@ -14,7 +14,7 @@ namespace GameCityApi.Models
             SuggestedHelpSkills = allSkills
                 .Where(skill => suggestedHelpSkills
                     .Where(shs => shs.SkillId == Skill.Id)
-                    .Select(shs => shs.SkillId)
+                    .Select(shs => shs.SuggestedHelpSkillId)
                     .Contains(skill.Id))
                 .Select(skill => skill.Name);
         }
