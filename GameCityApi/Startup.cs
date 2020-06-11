@@ -1,4 +1,6 @@
 using GameCityApi.Data;
+using GameCityApi.Services;
+using GameCityApi.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +52,8 @@ namespace GameCityApi
 
             services.AddDbContext<TorchbearerContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("UnionLarpDatabase")));
+
+            services.AddSingleton<IAuthService, AuthService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

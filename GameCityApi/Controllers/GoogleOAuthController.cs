@@ -24,6 +24,7 @@ namespace GameCityApi.Controllers
             _configuration = configuration;
         }
 
+        [HttpGet]
         public string Index()
         {
             return "Welcome to the Game City API Google OAuth Service";
