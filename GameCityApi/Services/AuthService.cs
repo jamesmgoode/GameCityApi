@@ -17,19 +17,14 @@ namespace GameCityApi.Services
             Refresh();
         }
 
-        public async Task<User> Authenticate(Google.Apis.Auth.GoogleJsonWebSignature.Payload payload)
+        public async Task<User> Authenticate(GoogleJsonWebSignature.Payload payload)
         {
             await Task.Delay(1);
 
-            return this.FindUserOrAdd(payload);
+            return FindUserOrAdd(payload);
         }
 
-        Task<User> IAuthService.Authenticate(GoogleJsonWebSignature.Payload payload)
-        {
-            throw new NotImplementedException();
-        }
-
-        private User FindUserOrAdd(Google.Apis.Auth.GoogleJsonWebSignature.Payload payload)
+        private User FindUserOrAdd(GoogleJsonWebSignature.Payload payload)
         {
             var u = _users.Where(x => x.Email == payload.Email).FirstOrDefault();
 

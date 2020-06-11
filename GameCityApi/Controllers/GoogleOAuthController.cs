@@ -35,7 +35,6 @@ namespace GameCityApi.Controllers
         {
             try
             {
-                //SimpleLogger.Log("userView = " + userView.tokenId);
                 var payload = GoogleJsonWebSignature.ValidateAsync(userView.TokenId, new GoogleJsonWebSignature.ValidationSettings()).Result;
                 var user = await _authService.Authenticate(payload);
 
@@ -53,6 +52,7 @@ namespace GameCityApi.Controllers
                   claims,
                   expires: DateTime.Now.AddSeconds(55 * 60),
                   signingCredentials: creds);
+
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token)
