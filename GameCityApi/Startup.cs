@@ -50,6 +50,8 @@ namespace GameCityApi
 
             services.AddControllers();
 
+            services.AddMvc().AddNewtonsoftJson();
+
             services.AddDbContext<TorchbearerContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("UnionLarpDatabase")));
 
