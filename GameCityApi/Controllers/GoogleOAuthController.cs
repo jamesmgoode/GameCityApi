@@ -39,7 +39,7 @@ namespace GameCityApi.Controllers
                 var payload = GoogleJsonWebSignature.ValidateAsync(userView.TokenId, new GoogleJsonWebSignature.ValidationSettings()).Result;
                 var user = await _authService.Authenticate(payload);
 
-                var claims = new[]
+                var claims = new Claim[]
                 {
                     new Claim(JwtRegisteredClaimNames.Sub,  user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
@@ -48,8 +48,8 @@ namespace GameCityApi.Controllers
                 var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["JwtSecret"]));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-                var token = new JwtSecurityToken(String.Empty,
-                  String.Empty,
+                var token = new JwtSecurityToken(string.Empty,
+                  string.Empty,
                   claims,
                   expires: DateTime.Now.AddSeconds(55 * 60),
                   signingCredentials: creds);
@@ -66,6 +66,5 @@ namespace GameCityApi.Controllers
 
             return BadRequest();
         }
-
     }
 }
