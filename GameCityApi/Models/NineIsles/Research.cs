@@ -10,7 +10,7 @@ namespace GameCityApi.Models.NineIsles
         public string Description { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public ResearchType ResearchType { get; set; }
+        public ResearchType? ResearchType { get; set; }
 
         public int Level { get; set; }
     }

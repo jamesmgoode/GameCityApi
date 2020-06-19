@@ -56,6 +56,8 @@ namespace GameCityApi
                 options.UseSqlServer(Configuration.GetConnectionString("UnionLarpDatabase")));
 
             services.AddSingleton<IAuthService, AuthService>();
+
+            services.AddSingleton<INineIslesService>(new NineIslesService(Configuration));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
