@@ -1,10 +1,14 @@
 using GameCityApi.Data;
+using GameCityApi.Services;
+using GameCityApi.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace GameCityApi
 {
@@ -29,12 +33,29 @@ namespace GameCityApi
                     });
             });
 
+            services.AddAuthentication()
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.RequireHttpsMetadata = false;
+                    cfg.SaveToken = true;
+
+                    cfg.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSecret"])),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
             services.AddControllers();
 
             services.AddMvc().AddNewtonsoftJson();
 
             services.AddDbContext<TorchbearerContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("UnionLarpDatabase")));
+
+            services.AddSingleton<IAuthService, AuthService>();
 
             services.AddSingleton<INineIslesService>(new NineIslesService(Configuration));
         }
