@@ -35,6 +35,8 @@ namespace GameCityApi
 
             services.AddDbContext<TorchbearerContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("UnionLarpDatabase")));
+
+            services.AddSingleton<INineIslesService>(new NineIslesService(Configuration));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
